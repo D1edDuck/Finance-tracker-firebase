@@ -1,0 +1,78 @@
+{
+    "wallet":{ 
+        "balance": 500,
+        "income": 2000,
+        "expenses": 300
+    },
+
+    "expenses": [
+        {
+            "id": 1, "name": "Shopping", "img": "/symbol-defs.svg#icon-Shopping", "story": [
+                {"id": 12, "data": "16.07", "sum": 200},
+                {"id": 13, "data": "15.07", "sum": 300},
+                {"id": 14, "data": "16.07", "sum": 20}
+            ]
+        },
+        {
+            "id": 2, "name": "Game", "img": "/symbol-defs.svg#icon-Game", "story": [
+                {"id": 15, "data": "16.07", "sum": 200},
+                {"id": 16, "data": "15.07", "sum": 500},
+                {"id": 17, "data": "14.07", "sum": 20}
+            ]
+        },
+        {
+            "id": 3, "name": "Food", "img": "/symbol-defs.svg#icon-Food", "story": [
+                {"id": 18, "data": "16.07", "sum": 200},
+                {"id": 19, "data": "13.07", "sum": 300},
+                {"id": 20, "data": "15.07", "sum": 20}
+            ]
+        },
+        {
+            "id": 4, "name": "TransferFrom", "img": "/symbol-defs.svg#icon-Contacts", "story": [
+                {"id": 21, "data": "16.07", "sum": 200},
+                {"id": 22, "data": "15.07", "sum": 300},
+                {"id": 23, "data": "16.07", "sum": 20}
+            ]
+        },
+        {
+            "id": 5, "name": "Clothes", "img": "/symbol-defs.svg#icon-Clothes", "story": [
+                {"id": 24, "data": "15.07", "sum": 200},
+                {"id": 25, "data": "15.07", "sum": 300},
+                {"id": 26, "data": "16.07", "sum": 20}
+            ]
+        },
+        {
+            "id": 6, "name": "Pharmacy", "img": "/symbol-defs.svg#icon-Pharmacy", "story": [
+                {"id": 27, "data": "12.07", "sum": 200}
+            ]
+        },
+        {
+            "id": 7, "name": "Air", "img": "/symbol-defs.svg#icon-air", "story": [
+                {"id": 28, "data": "16.07", "sum": 2000}
+            ]
+        },
+        {
+            "id": 8, "name": "Transport", "img": "/symbol-defs.svg#icon-Transport", "story": [
+                {"id": 29, "data": "15.07", "sum": 200},
+                {"id": 30, "data": "16.07", "sum": 20}
+            ]
+        }
+    ],
+
+    "income": [
+        {
+            "id": 1,"name": "Salary", "img": "/symbol-defs.svg#icon-Salary", "story": [
+                {"id": 1, "data": "16.07", "sum": 500},
+                {"id": 1, "data": "15.06", "sum": 300},
+                {"id": 1, "data": "16.08", "sum": 20}
+            ]
+        },
+        {
+            "id": 2,"name": "TransferTo", "img": "/symbol-defs.svg#icon-Contacts","story": [
+                {"id": 1, "data": "16.07", "sum": 200},
+                {"id": 1, "data": "15.07", "sum": 300},
+                {"id": 1, "data": "16.07", "sum": 20}
+            ]
+        }
+    ]
+}

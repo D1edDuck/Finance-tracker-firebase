@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-violet-light: #5c4b8a;
+  --color-violet-light-opacity: rgba(92, 75, 138, 0.6);
+  --color-violet-dark: #1e1e2f;
+  --color-violet-dark-opacity: rgba(30, 30, 47, 0.6);
+  --color-violet-white: #d1c5e2;
+  --color-shadow: rgba(106, 45, 210, 0.7);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 8px; /* высота горизонтального скроллбара */
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #7c3aed; /* цвет ползунка */
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
