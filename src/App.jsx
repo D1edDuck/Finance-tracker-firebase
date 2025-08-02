@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
-import Category from "./pages/Category";
 import AddTransaction from "./pages/AddTransaction";
-import { Filter } from "./features/FilterContext";
+import Filter from "./pages/Filter";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const router = createBrowserRouter([
@@ -13,20 +13,17 @@ function App() {
       children: [
         {
           index: true,
-          element: (
-            <Filter>
-              <Home />
-            </Filter>
-          ),
+          element: <Home />,
         },
         {
-          path: "category",
-          element: <Category />,
+          path: "filter",
+          element: <Filter />,
         },
         {
           path: "addTransaction",
           element: <AddTransaction />,
         },
+        { path: "*", element: <NotFound /> },
       ],
     },
   ]);
