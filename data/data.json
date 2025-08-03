@@ -8,7 +8,7 @@
     "transaction":[
         {
             "id": 1, "category": "expenses", "name": "Shopping", "img": "/symbol-defs.svg#icon-Shopping", "story": [
-                {"id": 12, "data": "16.07", "sum": 200},
+                {"id": 12, "data": "16.03", "sum": 200},
                 {"id": 13, "data": "15.07", "sum": 300},
                 {"id": 14, "data": "16.07", "sum": 20}
             ]
@@ -17,7 +17,7 @@
             "id": 2, "category": "expenses", "name": "Game", "img": "/symbol-defs.svg#icon-Game", "story": [
                 {"id": 15, "data": "16.07", "sum": 200},
                 {"id": 16, "data": "15.07", "sum": 500},
-                {"id": 17, "data": "14.07", "sum": 20}
+                {"id": 17, "data": "14.05", "sum": 20}
             ]
         },
         {
@@ -31,14 +31,14 @@
             "id": 4, "category": "expenses", "name": "TransferFrom", "img": "/symbol-defs.svg#icon-Contacts", "story": [
                 {"id": 21, "data": "16.07", "sum": 200},
                 {"id": 22, "data": "15.07", "sum": 300},
-                {"id": 23, "data": "16.07", "sum": 20}
+                {"id": 23, "data": "16.11", "sum": 20}
             ]
         },
         {
             "id": 5, "category": "expenses", "name": "Clothes", "img": "/symbol-defs.svg#icon-Clothes", "story": [
                 {"id": 24, "data": "15.07", "sum": 200},
                 {"id": 25, "data": "15.07", "sum": 300},
-                {"id": 26, "data": "16.07", "sum": 20}
+                {"id": 26, "data": "16.01", "sum": 20}
             ]
         },
         {

@@ -4,8 +4,11 @@ import FilterMenu from "../components/FilterMenu";
 import Header from "../components/Header";
 import Transaction from "../components/Transaction";
 import useFetchData from "../hooks/useFetchData";
-import { FilterContext } from "../features/FilterContext";
 import EditTransaction from "../components/EditTransaction";
+
+import { FilterContext } from "../features/FilterContext";
+import { sortTransactionsByDate } from "../utils/sortTransactionsByDate";
+import { transformFilterTransaction } from "../utils/transformFilterTransaction";
 
 function Home() {
   const {
@@ -17,21 +20,10 @@ function Home() {
     dispatch,
   } = useContext(FilterContext);
 
-  const sortedTransactions = filterTransaction
-    .flatMap((item) => {
-      return item.story.map((story) => {
-        return {
-          id: story.id,
-          data: story.data,
-          sum: story.sum,
-          img: item.img,
-          name: item.name,
-          category: item.category,
-          idCategory: item.id,
-        };
-      });
-    })
-    .sort((a, b) => b.data - a.data);
+  const transformedTransactions = transformFilterTransaction(filterTransaction);
+  const sortedTransactions = sortTransactionsByDate(transformedTransactions);
+  // console.log(transformedTransactions);
+  // console.log(sortedTransactions);
 
   if (status === "loading") {
     return <h2>Loading, please wait..</h2>;

@@ -6,7 +6,6 @@ function EditTransaction() {
     dispatch,
     state: { edit, inputValue },
   } = useContext(FilterContext);
-  console.log(edit);
 
   const transaction = edit.transaction;
 

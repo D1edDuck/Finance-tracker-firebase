@@ -1,3 +1,5 @@
+import { formatDate } from "../utils/formatDate";
+
 export const initialData = {
   transaction: [],
   filterTransaction: [],
@@ -90,7 +92,7 @@ export function reducer(state, action) {
           date: "",
           note: "",
           category: "",
-          type: "",
+          name: "",
         },
       };
     case "newTransaction":
@@ -106,7 +108,7 @@ export function reducer(state, action) {
             story: [
               {
                 id: Date.now(),
-                data: action.payload.date,
+                data: formatDate(action.payload.date),
                 sum: Number(action.payload.amount),
                 note: action.payload.note,
               },
@@ -133,7 +135,10 @@ export function reducer(state, action) {
                 if (story.id === action.payload.idTransaction) {
                   return {
                     ...story,
-                    data: state.inputValue.date || story.data,
+                    data:
+                      state.inputValue.date != ""
+                        ? formatDate(state.inputValue.date)
+                        : story.data,
                     note: state.inputValue.note || story.note,
                     sum: Number(state.inputValue.amount || story.sum),
                   };
@@ -149,7 +154,6 @@ export function reducer(state, action) {
           amount: "",
           date: "",
           note: "",
-          type: "",
           category: "",
         },
       };

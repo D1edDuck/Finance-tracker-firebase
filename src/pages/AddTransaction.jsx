@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Header from "../components/Header";
 import { FilterContext } from "../features/FilterContext";
 import FormAddTransaction from "../components/FormAddTransaction";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 function AddTransaction() {
   const { state, dispatch } = useContext(FilterContext);
@@ -12,7 +12,7 @@ function AddTransaction() {
   if (state.status === "loading") {
     return <h1>Loading</h1>;
   }
-
+  console.log(inputValue);
   return (
     <>
       <Header title={"Home"} link={"/"} />
