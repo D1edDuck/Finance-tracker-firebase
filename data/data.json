@@ -1,6 +1,6 @@
 {
     "wallet":{ 
-        "balance": 10,
+        "balance": 10000,
         "income": 200,
         "expenses": 300
     },

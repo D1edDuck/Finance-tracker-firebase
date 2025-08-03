@@ -135,7 +135,7 @@ export function reducer(state, action) {
                     ...story,
                     data: state.inputValue.date || story.data,
                     note: state.inputValue.note || story.note,
-                    sum: state.inputValue.amount || story.sum,
+                    sum: Number(state.inputValue.amount || story.sum),
                   };
                 }
                 return story;

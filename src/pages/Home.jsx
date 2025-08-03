@@ -17,6 +17,22 @@ function Home() {
     dispatch,
   } = useContext(FilterContext);
 
+  const sortedTransactions = filterTransaction
+    .flatMap((item) => {
+      return item.story.map((story) => {
+        return {
+          id: story.id,
+          data: story.data,
+          sum: story.sum,
+          img: item.img,
+          name: item.name,
+          category: item.category,
+          idCategory: item.id,
+        };
+      });
+    })
+    .sort((a, b) => b.data - a.data);
+
   if (status === "loading") {
     return <h2>Loading, please wait..</h2>;
   }
@@ -38,16 +54,10 @@ function Home() {
       </div>
       {status === "error" && <h2>Error: {errMessage}</h2>}
       <div className="grid xl:grid-cols-2 gap-8">
-        {filterTransaction.length > 0 &&
-          filterTransaction.map((category) =>
-            category.story.map((transaction, index) => (
-              <Transaction
-                key={transaction.id || index}
-                category={category}
-                transaction={transaction}
-              />
-            ))
-          )}
+        {sortedTransactions.length > 0 &&
+          sortedTransactions.map((category, index) => (
+            <Transaction key={category.id || index} transaction={category} />
+          ))}
       </div>
       {open && <EditTransaction />}
     </>

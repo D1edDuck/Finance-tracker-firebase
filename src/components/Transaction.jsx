@@ -1,7 +1,7 @@
 import { FilterContext } from "../features/FilterContext";
 import { useContext } from "react";
 
-function Transaction({ category, transaction }) {
+function Transaction({ transaction }) {
   const { dispatch } = useContext(FilterContext);
 
   return (
@@ -9,25 +9,27 @@ function Transaction({ category, transaction }) {
       <div className="flex items-center gap-8">
         <div className="p-4 bg-violet-white rounded-2xl">
           <svg className="w-8 h-8 fill-violet-dark transition-all">
-            <use xlinkHref={category.img.toLowerCase()}></use>
+            <use xlinkHref={transaction.img.toLowerCase()}></use>
           </svg>
         </div>
         <div>
-          <h3>{category.name}</h3>
+          <h3>{transaction.name}</h3>
           <p className="opacity-50 text-lg">{transaction.data}</p>
         </div>
       </div>
       <div className=" flex gap-8 ">
         <p
           className={` font-semibold ${
-            category.category === "income" ? "text-emerald-400" : "text-red-400"
+            transaction.category === "income"
+              ? "text-emerald-400"
+              : "text-red-400"
           }`}
         >
           {transaction.sum}$
         </p>
         <button
           onClick={() =>
-            dispatch({ type: "openModal", payload: { category, transaction } })
+            dispatch({ type: "openModal", payload: { transaction } })
           }
           className="bg-violet-white rounded-md cursor-pointer group-hover:bg-fuchsia-600 text-violet-dark p-2 text-sm hover:scale-110 font-semibold transition-all"
         >

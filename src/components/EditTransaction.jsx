@@ -6,8 +6,8 @@ function EditTransaction() {
     dispatch,
     state: { edit, inputValue },
   } = useContext(FilterContext);
+  console.log(edit);
 
-  const category = edit.category;
   const transaction = edit.transaction;
 
   return (
@@ -22,7 +22,7 @@ function EditTransaction() {
         }}
       >
         <h2 className="col-start-1 col-end-2">
-          <span className="font-semibold">Category:</span> {category.name}
+          <span className="font-semibold">Category:</span> {transaction.name}
         </h2>
         <p className="row-start-2 row-end-3">
           <span className="font-semibold">sum:</span> {transaction.sum}
@@ -88,7 +88,7 @@ function EditTransaction() {
               type: "editTransaction",
               payload: {
                 idTransaction: transaction.id,
-                idCategory: category.id,
+                idCategory: transaction.idCategory,
               },
             });
             dispatch({ type: "openModal" });
