@@ -2,10 +2,16 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import AddTransaction from "./pages/AddTransaction";
-import Filter from "./pages/Filter";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import { useReducer } from "react";
+import { initialData, reducer } from "./features/Reducer";
+import { analytics, app, auth, db } from "./features/firebase";
+import { GlobalContext } from "./features/Reducer";
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialData);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -16,11 +22,11 @@ function App() {
           element: <Home />,
         },
         {
-          path: "filter",
-          element: <Filter />,
+          path: "/profile",
+          element: <Login />,
         },
         {
-          path: "addTransaction",
+          path: "/addTransaction",
           element: <AddTransaction />,
         },
         { path: "*", element: <NotFound /> },
@@ -28,7 +34,13 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <GlobalContext.Provider
+      value={{ state, dispatch, app, analytics, db, auth }}
+    >
+      <RouterProvider router={router} />
+    </GlobalContext.Provider>
+  );
 }
 
 export default App;

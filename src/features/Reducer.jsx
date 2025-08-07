@@ -1,182 +1,72 @@
-import { formatDate } from "../utils/formatDate";
+import { createContext } from "react";
+
+export const GlobalContext = createContext(null);
 
 export const initialData = {
-  transaction: [],
-  filterTransaction: [],
-  balance: [],
-  open: false,
-  edit: [],
-  status: "loading",
-  errMessage: "",
-  inputValue: {
-    name: "",
-    amount: "",
-    date: "",
-    note: "",
-    category: "",
-  },
+  emailUser: "",
+  passwordUser: "",
+  userId: "",
+  name: "",
+  sum: "",
+  date: "",
+  note: "",
+  type: "",
+  img: "",
+  category: [],
+  user: null,
+  transactions: [
+    {
+      id: 1,
+      img: "shopping",
+      name: "shop",
+      sum: "100",
+      date: "2025-08-08",
+      note: "nothing",
+      type: "income",
+    },
+  ],
 };
 
 export function reducer(state, action) {
   switch (action.type) {
-    case "initTransaction":
+    case "login":
+      return 0;
+    case "updateInput":
       return {
         ...state,
-        transaction: action.payload,
-        status: "ready",
+        [action.payload.name]: action.payload.input,
       };
-    case "initFilter":
+    case "setUser":
       return {
         ...state,
-        filterTransaction: action.payload,
-        status: "ready",
+        user: action.payload,
       };
-    case "initData":
+    case "getTransactions":
       return {
         ...state,
-        balance: action.payload,
-        status: "ready",
+        transactions: action.payload,
       };
-    case "failedFetch":
+    case "getCategory":
       return {
         ...state,
-        status: "error",
-        errMessage: action.payload,
+        category: setCategory(state.transactions),
       };
-    case "updateAmount":
+    case "resetInput":
       return {
         ...state,
-        inputValue: {
-          ...state.inputValue,
-          amount: action.payload,
-        },
+        name: "",
+        sum: "",
+        date: "",
+        note: "",
+        type: "",
       };
-    case "updateDate":
-      return {
-        ...state,
-        inputValue: {
-          ...state.inputValue,
-          date: action.payload,
-        },
-      };
-    case "updateNote":
-      return {
-        ...state,
-        inputValue: {
-          ...state.inputValue,
-          note: action.payload,
-        },
-      };
-    case "updateName":
-      return {
-        ...state,
-        inputValue: {
-          ...state.inputValue,
-          name: action.payload,
-        },
-      };
-    case "updateCategory":
-      return {
-        ...state,
-        inputValue: {
-          ...state.inputValue,
-          category: action.payload,
-        },
-      };
-    case "reset":
-      return {
-        ...state,
-        inputValue: {
-          ...state.inputValue,
-          amount: "",
-          date: "",
-          note: "",
-          category: "",
-          name: "",
-        },
-      };
-    case "newTransaction":
-      return {
-        ...state,
-        transaction: [
-          ...state.transaction,
-          {
-            id: Date.now(),
-            name: action.payload.name,
-            img: `/symbol-defs.svg#icon-${action.payload.name.toLowerCase()}`,
-            category: action.payload.category,
-            story: [
-              {
-                id: Date.now(),
-                data: formatDate(action.payload.date),
-                sum: Number(action.payload.amount),
-                note: action.payload.note,
-              },
-            ],
-          },
-        ],
-        inputValue: {
-          ...state.inputValue,
-          amount: "",
-          date: "",
-          note: "",
-          name: "",
-          category: "",
-        },
-      };
-    case "editTransaction":
-      return {
-        ...state,
-        transaction: state.transaction.map((category) => {
-          if (category.id === action.payload.idCategory) {
-            return {
-              ...category,
-              story: category.story.map((story) => {
-                if (story.id === action.payload.idTransaction) {
-                  return {
-                    ...story,
-                    data:
-                      state.inputValue.date != ""
-                        ? formatDate(state.inputValue.date)
-                        : story.data,
-                    note: state.inputValue.note || story.note,
-                    sum: Number(state.inputValue.amount || story.sum),
-                  };
-                }
-                return story;
-              }),
-            };
-          }
-          return category;
-        }),
-        inputValue: {
-          ...state.inputValue,
-          amount: "",
-          date: "",
-          note: "",
-          category: "",
-        },
-      };
-    case "sortByName":
-      return {
-        ...state,
-        filterTransaction: state.transaction.filter(
-          (category) => action.payload === category.name
-        ),
-      };
-    case "sortByCategory":
-      return {
-        ...state,
-        filterTransaction: state.transaction.filter(
-          (category) => action.payload === category.category
-        ),
-      };
-    case "resetSort":
-      return {
-        ...state,
-        filterTransaction: state.transaction,
-      };
-    case "openModal":
-      return { ...state, open: !state.open, edit: action.payload };
   }
+}
+
+function setCategory(transactions) {
+  let category = [];
+  transactions.map((trans) => {
+    category.push({ name: trans.name, id: trans.id });
+  });
+  return category;
 }
