@@ -25,6 +25,10 @@ export const initialData = {
       type: "income",
     },
   ],
+  sortName: "",
+  openModal: "",
+  editTransaction: {},
+  refresh: false,
 };
 
 export function reducer(state, action) {
@@ -60,13 +64,35 @@ export function reducer(state, action) {
         note: "",
         type: "",
       };
+    case "selectSort":
+      return {
+        ...state,
+        sortName: action.payload,
+      };
+    case "resetSort":
+      return {
+        ...state,
+        sortName: "",
+      };
+    case "openEditModal":
+      return {
+        ...state,
+        openModal: !state.openModal,
+        editTransaction: action.payload,
+      };
+    case "updateData":
+      return {
+        ...state,
+        refresh: !state.refresh,
+      };
   }
 }
 
 function setCategory(transactions) {
   let category = [];
   transactions.map((trans) => {
-    category.push({ name: trans.name, id: trans.id });
+    if (!category.some((cat) => cat.name === trans.name))
+      category.push({ name: trans.name, id: trans.id });
   });
   return category;
 }

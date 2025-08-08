@@ -50,7 +50,7 @@ function SetTransaction() {
     <button
       disabled={!checkInput()}
       onClick={handleSubmit}
-      className={`px-20 py-5 rounded-2xl transition-all hover:scale-105 shadow-2xl shadow-shadow hover:shadow-lg ${
+      className={`sm:px-20 px-10 sm:py-5 py-2.5 rounded-2xl transition-all hover:scale-105 shadow-2xl shadow-shadow hover:shadow-lg ${
         !checkInput() ? "bg-gray-400 cursor-not-allowed" : "bg-violet-500"
       }`}
     >

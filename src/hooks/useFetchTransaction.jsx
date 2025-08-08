@@ -1,15 +1,17 @@
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "../features/Reducer";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { sortTransactionDate } from "../utils/sortTransactionDate";
 
 function useFetchTransaction() {
   const {
     state,
     db,
     dispatch,
-    state: { transactions },
+    state: { transactions, refresh, sortName },
   } = useContext(GlobalContext);
   const userId = state.user?.uid;
+  const sortTransaction = sortTransactionDate(transactions, sortName);
 
   useEffect(() => {
     if (!userId) return;
@@ -27,8 +29,8 @@ function useFetchTransaction() {
     };
 
     fetchTransactions();
-  }, [userId, db, dispatch]);
-  return { transactions };
+  }, [userId, db, dispatch, refresh]);
+  return { sortTransaction };
 }
 
 export default useFetchTransaction;
