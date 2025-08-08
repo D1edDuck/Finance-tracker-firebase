@@ -16,16 +16,16 @@ function Home() {
   } = useContext(GlobalContext);
 
   function checkUser() {
-    return user?.uid == "";
+    if (user?.uid == undefined) {
+      return false;
+    } else return true;
   }
 
   return (
     <>
       <Header link={"/addTransaction"} title={"add transaction"} />
       <Balance />
-      {checkUser() ? (
-        ""
-      ) : (
+      {!checkUser() && (
         <div className="font-semibold text-xl mb-8 border-2 px-4 border-fuchsia-600 rounded-xl py-4 text-white">
           <p className=" mb-2 md:mb-4">You is not login Account</p>
           <NavLink

@@ -6,7 +6,7 @@ function Input({ placeholder, type, dispatchType, value, name, width }) {
   return (
     <input
       className={`bg-white rounded-2xl px-3 ${
-        width ? `w-${width}` : "w-60"
+        width ? `w-${width}` : "w-35"
       }  text-black focus:outline-0 py-1`}
       placeholder={placeholder}
       type={type}

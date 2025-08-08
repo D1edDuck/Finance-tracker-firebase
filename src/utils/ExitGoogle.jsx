@@ -19,7 +19,7 @@ function LoginGoogle() {
   return (
     <button
       onClick={handleGoogleLogOut}
-      className="px-20 py-5 rounded-2xl transition-all shadow-2xl shadow-shadow hover:shadow-lg text-white text-2xl font-semibold bg-violet-500 hover:scale-105"
+      className="md:px-20 md:py-5 px-10 py-2.5 rounded-2xl transition-all shadow-2xl shadow-shadow hover:shadow-lg text-white text-2xl font-semibold bg-violet-500 hover:scale-105"
     >
       Exit
     </button>
