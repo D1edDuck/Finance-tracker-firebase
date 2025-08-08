@@ -29,6 +29,7 @@ export const initialData = {
   openModal: "",
   editTransaction: {},
   refresh: false,
+  userLogin: false,
 };
 
 export function reducer(state, action) {
@@ -85,7 +86,17 @@ export function reducer(state, action) {
         ...state,
         refresh: !state.refresh,
       };
+    case "checkUser":
+      return {
+        ...state,
+        userLogin: checkUser(state.user.id),
+      };
   }
+}
+
+function checkUser(id) {
+  if (id == undefined) return false;
+  else return true;
 }
 
 function setCategory(transactions) {

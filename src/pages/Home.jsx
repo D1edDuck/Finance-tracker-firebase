@@ -12,20 +12,13 @@ function Home() {
   const { sortTransaction } = useFetchTransactions();
 
   const {
-    state: { category, openModal, user },
+    state: { category, openModal, userLogin },
   } = useContext(GlobalContext);
-
-  function checkUser() {
-    if (user?.uid == undefined) {
-      return false;
-    } else return true;
-  }
 
   return (
     <>
-      <Header link={"/addTransaction"} title={"add transaction"} />
       <Balance />
-      {!checkUser() && (
+      {!userLogin && (
         <div className="font-semibold text-xl mb-8 border-2 px-4 border-fuchsia-600 rounded-xl py-4 text-white">
           <p className=" mb-2 md:mb-4">You is not login Account</p>
           <NavLink

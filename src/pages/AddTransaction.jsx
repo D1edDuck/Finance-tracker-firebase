@@ -24,11 +24,8 @@ function AddTransaction() {
     setFields(missingFields);
   }, [name, sum, date, type, note]);
 
-  console.log(fields);
-
   return (
     <>
-      <Header title={"Home"} link={"/"} />
       <h1 className="text-center font-bold text-3xl text-white mb-8">
         Add new Transaction
       </h1>
