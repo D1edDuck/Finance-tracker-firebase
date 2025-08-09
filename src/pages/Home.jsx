@@ -1,24 +1,23 @@
 import { useContext } from "react";
 import Balance from "../components/Balance";
 import FilterMenu from "../components/FilterMenu";
-import Header from "../components/Header";
 import Transaction from "../components/Transaction";
 import useFetchTransactions from "../hooks/useFetchTransaction";
 import { GlobalContext } from "../features/Reducer";
 import EditTransaction from "../components/EditTransaction";
 import { NavLink } from "react-router";
+import AddAmount from "../components/AddAmount";
 
 function Home() {
-  const { sortTransaction } = useFetchTransactions();
+  const { sortTransaction, userId } = useFetchTransactions();
 
   const {
-    state: { category, openModal, userLogin },
+    state: { category, openModal, openAmount },
   } = useContext(GlobalContext);
-
   return (
     <>
       <Balance />
-      {!userLogin && (
+      {!userId && (
         <div className="font-semibold text-xl mb-8 border-2 px-4 border-fuchsia-600 rounded-xl py-4 text-white">
           <p className=" mb-2 md:mb-4">You is not login Account</p>
           <NavLink
@@ -29,8 +28,14 @@ function Home() {
           </NavLink>
         </div>
       )}
-      <div className="flex justify-around md:flex-row flex-col">
+      <div className="flex justify-around mb-8 md:items-center md:flex-row gap-4 flex-col">
+        <p className="md:text-2xl text-xl text-white font-semibold">
+          Filter for category
+        </p>
         <FilterMenu data={category} />
+        <p className="md:text-2xl text-xl text-white font-semibold ">
+          Filter for type
+        </p>
         <FilterMenu
           data={[
             { name: "expenses", id: 100 },
@@ -46,6 +51,7 @@ function Home() {
       </div>
       <div className="grid xl:grid-cols-2 gap-8"></div>
       {openModal && <EditTransaction />}
+      {openAmount && <AddAmount />}
     </>
   );
 }

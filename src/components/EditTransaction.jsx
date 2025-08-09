@@ -81,7 +81,7 @@ function EditTransaction() {
       <div className="flex justify-between">
         <button
           onClick={() => dispatch({ type: "openEditModal" })}
-          className="bg-violet-white rounded-md cursor-pointer outline-2 outline-fuchsia-600 hover:bg-fuchsia-600 text-violet-dark px-4 py-2 text-lg hover:scale-110 font-semibold transition-all"
+          className="bg-violet-white rounded-md cursor-pointer outline-2 outline-fuchsia-600 hover:bg-fuchsia-600 active:bg-fuchsia-600 text-violet-dark px-4 py-2 text-lg hover:scale-110 active:scale-110 font-semibold transition-all"
         >
           Exit
         </button>

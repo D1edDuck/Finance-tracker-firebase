@@ -5,7 +5,7 @@ export const GlobalContext = createContext(null);
 export const initialData = {
   emailUser: "",
   passwordUser: "",
-  userId: "",
+  userId: false,
   name: "",
   sum: "",
   date: "",
@@ -27,9 +27,14 @@ export const initialData = {
   ],
   sortName: "",
   openModal: "",
+  openAmount: "",
   editTransaction: {},
   refresh: false,
-  userLogin: false,
+  wallet: {
+    balance: 100,
+    income: 100,
+    expenses: 100,
+  },
 };
 
 export function reducer(state, action) {
@@ -50,11 +55,11 @@ export function reducer(state, action) {
       return {
         ...state,
         transactions: action.payload,
-      };
-    case "getCategory":
-      return {
-        ...state,
         category: setCategory(state.transactions),
+        wallet: {
+          income: calcCategory(state.transactions, "income"),
+          expenses: calcCategory(state.transactions, "expenses"),
+        },
       };
     case "resetInput":
       return {
@@ -64,6 +69,7 @@ export function reducer(state, action) {
         date: "",
         note: "",
         type: "",
+        balance: "",
       };
     case "selectSort":
       return {
@@ -81,22 +87,22 @@ export function reducer(state, action) {
         openModal: !state.openModal,
         editTransaction: action.payload,
       };
+    case "openAmountModal":
+      return {
+        ...state,
+        openAmount: !state.openAmount,
+      };
     case "updateData":
       return {
         ...state,
         refresh: !state.refresh,
       };
-    case "checkUser":
+    case "addAmount":
       return {
         ...state,
-        userLogin: checkUser(state.user.id),
+        balance: action.payload.input,
       };
   }
-}
-
-function checkUser(id) {
-  if (id == undefined) return false;
-  else return true;
 }
 
 function setCategory(transactions) {
@@ -106,4 +112,11 @@ function setCategory(transactions) {
       category.push({ name: trans.name, id: trans.id });
   });
   return category;
+}
+
+function calcCategory(transaction, type) {
+  return transaction.reduce((acc, item) => {
+    if (item.type == type) return acc + Number(item.sum);
+    return acc;
+  }, 0);
 }

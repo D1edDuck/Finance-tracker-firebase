@@ -5,12 +5,12 @@ import { sortTransactionDate } from "../utils/sortTransactionDate";
 
 function useFetchTransaction() {
   const {
-    state,
     db,
     dispatch,
-    state: { transactions, refresh, sortName },
+    state: { user, transactions, refresh, sortName },
   } = useContext(GlobalContext);
-  const userId = state.user?.uid;
+
+  const userId = user?.uid;
   const sortTransaction = sortTransactionDate(transactions, sortName);
 
   useEffect(() => {
@@ -25,12 +25,11 @@ function useFetchTransaction() {
         fetchedTransactions.push({ id: doc.id, ...doc.data() });
       });
       dispatch({ type: "getTransactions", payload: fetchedTransactions });
-      dispatch({ type: "getCategory" });
     };
 
     fetchTransactions();
   }, [userId, db, dispatch, refresh]);
-  return { sortTransaction };
+  return { sortTransaction, userId };
 }
 
 export default useFetchTransaction;

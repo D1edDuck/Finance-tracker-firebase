@@ -9,7 +9,7 @@ function Header({ title, link }) {
   };
 
   return (
-    <header className="flex flex-col md:flex-row items-center justify-between rounded-xl md:rounded-full bg-violet-dark-opacity text-white text-2xl px-4 py-3 mb-8 relative">
+    <header className="flex flex-col md:flex-row items-center justify-between rounded-xl md:rounded-full bg-violet-dark-opacity text-white text-xl md:text-2xl md:px-4 py-3 mb-8 relative">
       <div
         className={`flex items-center  ${menuOpen ? "mb-2" : "mb-0"} md:mb-0`}
       >
@@ -21,7 +21,7 @@ function Header({ title, link }) {
         </button>
       </div>
       <hr
-        className={`w-3/4 h-1 bg-violet-dark text-violet-dark rounded-xl md:hidden justify-self-center mb-2 ${
+        className={`w-5/6 h-1 bg-violet-dark text-violet-dark rounded-xl md:hidden justify-self-center mb-2 ${
           menuOpen ? "flex" : "hidden md:flex"
         }`}
       />
@@ -53,7 +53,7 @@ function Header({ title, link }) {
       </nav>
       <NavLink
         to={link}
-        className={`bg-violet-white hover:outline-12 transition-all hover:inset-shadow-sm inset-shadow-shadow outline-violet-800 text-black rounded-full px-6 py-3 font-semibold text-lg ${
+        className={`bg-violet-white hover:outline-12 transition-all hover:inset-shadow-sm inset-shadow-shadow outline-violet-800 text-black rounded-xl md:rounded-full px-3 py-1 md:px-6 md:py-3 font-semibold text-lg ${
           menuOpen ? "flex" : "hidden md:flex"
         }`}
       >

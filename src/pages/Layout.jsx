@@ -5,7 +5,7 @@ import Header from "../components/Header";
 
 function Layout() {
   const {
-    state: { openModal },
+    state: { openModal, openAmount },
   } = useContext(GlobalContext);
 
   const currentProduct = useLocation();
@@ -20,7 +20,7 @@ function Layout() {
       />
       <div
         className={`${
-          openModal ? "bg-gray-700 opacity-70" : "hidden"
+          openModal || openAmount ? "bg-gray-700 opacity-70" : "hidden"
         } fixed inset-0 z-30`}
       ></div>
       <Outlet />
