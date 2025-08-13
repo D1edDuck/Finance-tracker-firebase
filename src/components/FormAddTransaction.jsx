@@ -1,19 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Input from "../UX/Input";
 import { GlobalContext } from "../features/Reducer";
 
 function FormAddTransaction() {
   const { state, dispatch } = useContext(GlobalContext);
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const widthInput = windowWidth < 640 ? "70" : 0;
 
   return (
     <div className="bg-violet-light rounded-xl mb-8 gap-y-2 inset-shadow-sm inset-shadow-violet-dark-opacity text-white font-medium text-xl grid sm:grid-cols-2 grid-cols-1 sm:grid-rows-6 items-center w-max px-10 gap-x-8 mx-auto py-10 justify-items-center">
@@ -25,7 +15,6 @@ function FormAddTransaction() {
           dispatchType={"updateInput"}
           value={state.sum}
           name={"sum"}
-          width={widthInput}
         />
       </div>
 
@@ -37,7 +26,6 @@ function FormAddTransaction() {
           dispatchType={"updateInput"}
           value={state.date}
           name={"date"}
-          width={widthInput}
         />
       </div>
 
@@ -49,11 +37,10 @@ function FormAddTransaction() {
           dispatchType={"updateInput"}
           value={state.note}
           name={"note"}
-          width={widthInput}
         />
       </div>
 
-      <div className="sm:col-start-2 row-start-1 row-end-4">
+      <div className="sm:col-start-2 row-start-1 sm:row-end-4">
         <label className="mb-3 flex flex-col">
           <span className="mb-1 font-semibold">Category</span>
           <Input
@@ -62,7 +49,6 @@ function FormAddTransaction() {
             dispatchType={"updateInput"}
             value={state.name}
             name={"name"}
-            width={widthInput}
           />
         </label>
       </div>
@@ -78,9 +64,8 @@ function FormAddTransaction() {
           }}
           value={state.type}
           required
-          className={`bg-white rounded-xl ${
-            widthInput ? `w-70` : "w-60"
-          } text-black px-3 py-1 focus:outline-0`}
+          className={`bg-white rounded-2xl w-60
+           text-black px-3 py-1 focus:outline-0`}
         >
           <option value="" disabled>
             Select type

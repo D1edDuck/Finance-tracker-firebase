@@ -5,41 +5,106 @@ import useFetchWallet from "../hooks/useFetchWallet";
 function Balance() {
   const {
     dispatch,
-    state: { wallet },
+    state: { wallet = { income: 0, expenses: 0 } },
   } = useContext(GlobalContext);
-  const balance = useFetchWallet();
+
+  const fetched = useFetchWallet();
+  const loading = fetched?.loading ?? false;
+  const error = fetched?.error ?? null;
+  const balance =
+    fetched?.balance ?? (typeof fetched === "number" ? fetched : null);
 
   return (
-    <div className="flex flex-col md:px-24 md:py-12 gap-5 justify-between px-8 py-4 sm:px-24 sm:py-6 text-white font-semibold bg-linear-180 from-violet-dark to-violet-dark-opacity rounded-xl md:rounded-4xl to-65% shadow-shadow shadow-2xl mb-4 md:mb-8">
-      <div className="flex flex-row justify-between">
-        <div className="text-center text-2xl sm:text-4xl sm:space-y-5 space-y-0">
-          <h2>{balance ? `${balance}$` : `Not data`}</h2>
-          <p className="text-lg sm:text-2xl opacity-45">Balance</p>
+    <section
+      className="mx-auto rounded-2xl mb-4 md:mb-8 bg-gradient-to-r from-violet-dark/90 to-violet-light/80 text-white p-4 sm:p-6 shadow-2xl"
+      aria-labelledby="balance-title"
+      role="region"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex-1">
+          <h2
+            id="balance-title"
+            className="text-lg sm:text-xl font-semibold opacity-90"
+          >
+            Wallet overview
+          </h2>
+          <p className="text-sm text-white/75 mt-1">
+            Now you can see the general information about the account.
+          </p>
         </div>
-        <div className="text-center text-2xl sm:text-4xl sm:space-y-5 space-y-0">
-          <h2>{wallet.income}$</h2>
-          <p className="text-lg sm:text-2xl opacity-45">Income</p>
-        </div>
-        <div className="text-center text-2xl sm:text-4xl sm:space-y-5 space-y-  ">
-          <h2>{wallet.expenses}$</h2>
-          <p className="text-lg sm:text-2xl opacity-45">Expenses</p>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => dispatch({ type: "openAmountModal" })}
+            className="bg-white text-violet-800 rounded-lg px-3 py-2 font-semibold text-sm hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 transition"
+            aria-label="Add initial amount"
+          >
+            Add amount
+          </button>
         </div>
       </div>
-      {!balance && (
-        <>
-          <hr className="rounded-2xl text-gray-600 border-t-2" />
-          <div className="flex justify-between items-center gap-2">
-            <p>The initial balance is unknown, please add the amount</p>
+
+      <div className="mt-4 bg-white/10 rounded-xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+        <div className="flex flex-col items-start sm:items-center">
+          <span className="text-xl text-white/70">Balance</span>
+
+          <div className="mt-2">
+            {loading ? (
+              <div className="h-10 w-32 bg-white/20 rounded animate-pulse" />
+            ) : error ? (
+              <span
+                className="text-2xl text-red-300"
+                role="status"
+                aria-live="polite"
+              >
+                Error
+              </span>
+            ) : balance != null ? (
+              <span className="text-2xl sm:text-3xl font-bold">{balance}$</span>
+            ) : (
+              <span className="text-2xl sm:text-3xl text-white/60">
+                No data
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start sm:items-center">
+          <span className="text-sm text-white/70">Income</span>
+          <div className="mt-2">
+            <span className="text-2xl sm:text-3xl font-semibold text-green-200">
+              {wallet?.income ?? 0}$
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start sm:items-center">
+          <span className="text-sm text-white/70">Expenses</span>
+          <div className="mt-2">
+            <span className="text-2xl sm:text-3xl font-semibold text-red-200">
+              {wallet?.expenses ?? 0}$
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {!loading && balance == null && !error && (
+        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white/5 p-3 rounded-lg">
+          <p className="text-sm text-white/80">
+            The initial balance is not set — add an amount to start tracking
+            transactions.
+          </p>
+          <div>
             <button
               onClick={() => dispatch({ type: "openAmountModal" })}
-              className="bg-violet-white text-violet-dark rounded-lg py-1 active:outline-2 outline-violet-light px-2 whitespace-nowrap"
+              className="bg-white text-violet-800 rounded-md px-3 py-2 font-medium hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 transition"
             >
-              Add amount
+              Add initial amount
             </button>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </section>
   );
 }
 

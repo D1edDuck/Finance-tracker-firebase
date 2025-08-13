@@ -31,7 +31,7 @@ function UpdateTransaction() {
         dispatch({ type: "updateData" });
         dispatch({ type: "openEditModal" });
       }}
-      className="bg-violet-white rounded-md cursor-pointer outline-2 outline-fuchsia-600 hover:outline-violet-500 hover:bg-violet-500 text-violet-dark py-2 px-4 text-lg hover:scale-110 font-semibold transition-all"
+      className="flex items-center justify-center px-4 py-2 rounded-lg border border-fuchsia-500 text-fuchsia-700 bg-transparent hover:bg-fuchsia-50 transition"
     >
       Save
     </button>

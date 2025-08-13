@@ -5,9 +5,9 @@ function Transaction({ transaction }) {
   const { dispatch } = useContext(GlobalContext);
 
   return (
-    <div className="flex justify-between rounded-2xl md:rounded-3xl bg-linear-90 from-violet-light to-violet-light-opacity px-4 py-2.5 sm:px-8 sm:py-5 group hover:border-l-fuchsia-600 active:border-l-fuchsia-600 border-l-8 hover:border-l-12 active:border-l-12 hover:shadow-xl active:shadow-xl shadow-lg shadow-shadow border-white items-center text-white text-xl md:text-2xl  hover:translate-x-2 transition-all ">
+    <div className="flex justify-between rounded-xl md:rounded-3xl bg-linear-90 from-violet-light to-violet-light-opacity px-4 py-2.5 sm:px-8 sm:py-5 group hover:border-l-fuchsia-600 active:border-l-fuchsia-600 border-l-6 md:border-l-8 hover:border-l-12 active:border-l-12 hover:shadow-xl active:shadow-xl shadow-lg shadow-shadow border-white items-center text-white text-xl md:text-2xl  hover:translate-x-2 transition-all ">
       <div className="flex items-center gap-8">
-        <div className="p-4 bg-violet-white rounded-xl md:rounded-2xl">
+        <div className="md:p-4 p-3 bg-violet-white rounded-lg md:rounded-2xl">
           <svg className="sm:w-8 sm:h-8 w-6 h-6 fill-violet-dark transition-all">
             <use xlinkHref={`/symbol-defs.svg#icon-${transaction.img}`}></use>
           </svg>
@@ -17,7 +17,7 @@ function Transaction({ transaction }) {
           <p className="opacity-50 text-xs sm:text-lg">{transaction.date}</p>
         </div>
       </div>
-      <div className=" flex gap-8 ">
+      <div className=" flex gap-8 items-center">
         <p
           className={` font-semibold ${
             transaction.type === "income" ? "text-emerald-400" : "text-red-400"
@@ -29,7 +29,7 @@ function Transaction({ transaction }) {
           onClick={() =>
             dispatch({ type: "openEditModal", payload: transaction })
           }
-          className="bg-violet-white rounded-lg md:rounded-xl sm:rounded-md cursor-pointer group-hover:bg-fuchsia-600 group-active:bg-fuchsia-600  text-violet-dark p-2 text-sm hover:scale-110 group-active:scale-110 font-semibold transition-all"
+          className="bg-violet-white rounded-md md:rounded-xl sm:rounded-md cursor-pointer group-hover:bg-fuchsia-600 group-active:bg-fuchsia-600  text-violet-dark p-2 text-sm hover:scale-110 group-active:scale-110 font-semibold transition-all"
         >
           Edit
         </button>

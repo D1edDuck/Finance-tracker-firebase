@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../features/Reducer";
-import UpdateTransaction from "../utils/UpdateTransaction";
 import Input from "../UX/Input";
+import UpdateTransaction from "../utils/UpdateTransaction";
 
 function EditTransaction() {
   const {
@@ -9,83 +9,128 @@ function EditTransaction() {
     dispatch,
   } = useContext(GlobalContext);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const gridTemplateColumns =
-    windowWidth > 430 ? "15rem 0.5rem 15rem" : "8rem 0.5rem 12rem";
-
   return (
-    <div className="bg-violet-white p-5 fixed top-1/2 z-50 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md shadow-shadow shadow-md">
-      <h2 className="font-semibold text-3xl">Edit a transaction</h2>
-      <div
-        className={`text-2xl grid grid-cols-3 items-center grid-rows-4 gap-2.5 py-5 
-        }`}
-        style={{
-          gridTemplateColumns: gridTemplateColumns,
-        }}
-      >
-        <div className="col-start-1 col-end-2 gap-2 flex flex-col sm:flex-row">
-          <p className="font-semibold">name:</p>
-          <p>{editTransaction.name}</p>
-        </div>
-        <div className="row-start-2 row-end-3 flex gap-2 flex-col sm:flex-row">
-          <p className="font-semibold">sum:</p>
-          <p>{editTransaction.sum}</p>
-        </div>
-        <div className="row-start-3 row-end-4 flex flex-col gap-2 sm:flex-row">
-          <p className="font-semibold">date:</p>
-          <p>{editTransaction.date}</p>
-        </div>
-        <div className="row-start-4 flex flex-col gap-2 sm:flex-row">
-          <p className="font-semibold">note:</p>
-          <p>{editTransaction.note}</p>
-        </div>
-        <hr className="col-start-2 row-span-full w-0.5 h-full  bg-violet-light rounded-md justify-self-center " />
-        <div className=" gap-2 flex flex-row">
-          <p>Sum</p>
-          <Input
-            placeholder={editTransaction.sum}
-            type={"number"}
-            dispatchType={"updateInput"}
-            value={sum}
-            name={"sum"}
-          />
-        </div>
-        <div className=" gap-2 flex flex-row">
-          <p>Date</p>
-          <Input
-            placeholder={editTransaction.date}
-            type={"date"}
-            dispatchType={"updateInput"}
-            value={date}
-            name={"date"}
-          />
-        </div>
-        <div className=" gap-2 flex flex-row">
-          <p>Note</p>
-          <Input
-            placeholder={editTransaction.note}
-            type={"text"}
-            dispatchType={"updateInput"}
-            value={note}
-            name={"note"}
-          />
-        </div>
-      </div>
-      <div className="flex justify-between">
-        <button
-          onClick={() => dispatch({ type: "openEditModal" })}
-          className="bg-violet-white rounded-md cursor-pointer outline-2 outline-fuchsia-600 hover:bg-fuchsia-600 active:bg-fuchsia-600 text-violet-dark px-4 py-2 text-lg hover:scale-110 active:scale-110 font-semibold transition-all"
+    <div
+      className="fixed inset-0 flex items-center justify-center z-50 p-4"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="edit-transaction-title"
+    >
+      <div className="bg-violet-50 w-full max-w-3xl rounded-xl shadow-lg p-5 md:p-6 relative">
+        <h2
+          id="edit-transaction-title"
+          className="text-2xl font-semibold text-violet-dark mb-3"
         >
-          Exit
-        </button>
-        <UpdateTransaction />
+          Edit a transaction
+        </h2>
+
+        <div className="flex flex-col md:flex-row items-stretch gap-4 md:gap-6">
+          <aside className="md:w-44 w-full text-xl text-violet-dark flex-shrink-0">
+            <div className="mb-3">
+              <div className="font-medium text-violet-dark mb-1">Name</div>
+              <div className="text-xl">{editTransaction?.name ?? "—"}</div>
+            </div>
+
+            <div className="mb-3">
+              <div className="font-medium text-violet-dark mb-1">
+                Current sum
+              </div>
+              <div className="text-xl">
+                {String(editTransaction?.sum ?? "—")}
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <div className="font-medium text-violet-dark mb-1">Date</div>
+              <div className="text-xl">
+                {String(editTransaction?.date ?? "—")}
+              </div>
+            </div>
+
+            <div>
+              <div className="font-medium text-violet-dark mb-1">Note</div>
+              <div className="text-xl break-words">
+                {editTransaction?.note ?? "—"}
+              </div>
+            </div>
+          </aside>
+
+          <div className="hidden md:block w-px bg-violet-200 rounded self-stretch" />
+          <div className="md:hidden h-px bg-violet-200 rounded w-full" />
+
+          <section className="flex-1 bg-violet-white p-4 rounded-lg shadow-sm">
+            <label className="flex flex-col mb-3" htmlFor="sum-input">
+              <span className="text-xl font-medium text-violet-dark mb-1">
+                Sum
+              </span>
+              <Input
+                id="sum-input"
+                name="sum"
+                type="number"
+                value={sum}
+                dispatchType={"updateInput"}
+                placeholder="0.00"
+                aria-label="Sum"
+                autoFocus
+                min="0"
+                step="0.01"
+              />
+              {!Number(sum) || Number(sum) <= 0 ? (
+                <span className="text-xs text-red-600 mt-1">
+                  Sum must be greater than 0
+                </span>
+              ) : null}
+            </label>
+
+            <label className="flex flex-col mb-3" htmlFor="date-input">
+              <span className="text-xl font-medium text-violet-dark mb-1">
+                Date
+              </span>
+              <Input
+                id="date-input"
+                name="date"
+                type="date"
+                value={date}
+                dispatchType={"updateInput"}
+                aria-label="Date"
+              />
+              {!date || isNaN(new Date(date).getTime()) ? (
+                <span className="text-xs text-red-600 mt-1">
+                  Please enter a valid date
+                </span>
+              ) : null}
+            </label>
+
+            <label className="flex flex-col mb-5" htmlFor="note-input">
+              <span className="text-xl font-medium text-violet-dark mb-1">
+                Note
+              </span>
+              <Input
+                id="note-input"
+                name="note"
+                type="text"
+                value={note}
+                dispatchType={"updateInput"}
+                aria-label="Note"
+                placeholder="Optional"
+              />
+            </label>
+
+            <div className="flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => dispatch({ type: "openEditModal" })}
+                className="flex items-center justify-center px-4 py-2 rounded-lg border border-fuchsia-500 text-fuchsia-700 bg-transparent hover:bg-fuchsia-50 transition"
+              >
+                Exit
+              </button>
+
+              <div className="ml-auto flex items-center gap-3">
+                <UpdateTransaction />
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
