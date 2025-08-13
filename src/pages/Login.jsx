@@ -7,7 +7,6 @@ import { NavLink } from "react-router";
 
 function Login() {
   const { state } = useContext(GlobalContext);
-
   return (
     <div>
       <h2 className="text-3xl font-semibold text-white text-center pt-6 mb-15">

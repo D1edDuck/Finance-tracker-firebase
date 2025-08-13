@@ -55,10 +55,10 @@ export function reducer(state, action) {
       return {
         ...state,
         transactions: action.payload,
-        category: setCategory(state.transactions),
+        category: setCategory(action.payload),
         wallet: {
-          income: calcCategory(state.transactions, "income"),
-          expenses: calcCategory(state.transactions, "expenses"),
+          income: calcCategory(action.payload, "income"),
+          expenses: calcCategory(action.payload, "expenses"),
         },
       };
     case "resetInput":

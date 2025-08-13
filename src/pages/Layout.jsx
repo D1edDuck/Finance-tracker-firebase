@@ -6,7 +6,9 @@ import Header from "../components/Header";
 function Layout() {
   const {
     state: { openModal, openAmount },
+    state,
   } = useContext(GlobalContext);
+  console.log(state);
 
   const currentProduct = useLocation();
 

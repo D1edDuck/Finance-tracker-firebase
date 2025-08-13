@@ -19,7 +19,6 @@ function useFetchWallet() {
         const walletRef = collection(db, "wallet");
         const q = query(walletRef, where("userId", "==", userId));
         const querySnapshot = await getDocs(q);
-        console.log(q);
         if (!querySnapshot.empty) {
           const walletDoc = querySnapshot.docs[0];
           const data = walletDoc.data();

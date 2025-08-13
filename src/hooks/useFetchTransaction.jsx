@@ -7,7 +7,7 @@ function useFetchTransaction() {
   const {
     db,
     dispatch,
-    state: { user, transactions, refresh, sortName },
+    state: { user, transactions, refresh, sortName, category },
   } = useContext(GlobalContext);
 
   const userId = user?.uid;
@@ -29,7 +29,7 @@ function useFetchTransaction() {
 
     fetchTransactions();
   }, [userId, db, dispatch, refresh]);
-  return { sortTransaction, userId };
+  return { sortTransaction, userId, category };
 }
 
 export default useFetchTransaction;

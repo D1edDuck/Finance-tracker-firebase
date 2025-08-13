@@ -9,11 +9,12 @@ import { NavLink } from "react-router";
 import AddAmount from "../components/AddAmount";
 
 function Home() {
-  const { sortTransaction, userId } = useFetchTransactions();
-
   const {
-    state: { category, openModal, openAmount },
+    state: { openModal, openAmount },
   } = useContext(GlobalContext);
+
+  const { sortTransaction, userId, category } = useFetchTransactions();
+
   return (
     <>
       <Balance />
