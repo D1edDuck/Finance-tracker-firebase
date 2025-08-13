@@ -1,93 +1,100 @@
-import { useContext, useRef, useEffect, useState } from "react";
+import React, { useContext, useCallback, memo } from "react";
 import { GlobalContext } from "../features/Reducer";
 
-function FilterMenu({ data }) {
-  const { dispatch } = useContext(GlobalContext);
-  const [selected, setSelected] = useState("All");
-  const containerRef = useRef(null);
+function FilterMenu({ data = [], label = "" }) {
+  const { state, dispatch } = useContext(GlobalContext);
+  const selected = state.sortName ?? null;
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const active = container.querySelector('[data-active="true"]');
-    if (active) {
-      const containerRect = container.getBoundingClientRect();
-      const activeRect = active.getBoundingClientRect();
-      const offset =
-        active.offsetLeft -
-        container.scrollLeft -
-        (containerRect.width / 2 - activeRect.width / 2);
-      container.scrollTo({
-        left: offset + container.scrollLeft,
-        behavior: "smooth",
-      });
-    }
-  }, [selected, data]);
+  const select = useCallback(
+    (name) => {
+      if (!name) dispatch({ type: "resetSort" });
+      else dispatch({ type: "selectSort", payload: name });
+    },
+    [dispatch]
+  );
 
-  const handleSelect = (name) => {
-    setSelected(name);
-    if (name === "All") {
-      dispatch({ type: "resetSort" });
-    } else {
-      dispatch({ type: "selectSort", payload: name });
-    }
-  };
-
-  const onKey = (e, name) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleSelect(name);
-    }
-  };
+  const handleKey = useCallback(
+    (e, name) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        select(name);
+      }
+    },
+    [select]
+  );
 
   return (
-    <div
-      ref={containerRef}
-      className="flex overflow-x-auto p-2 scrollbar-thin  inset-shadow-sm rounded-xl md:rounded-2xl inset-shadow-violet-dark"
-      role="toolbar"
-      aria-label="Filter categories"
-    >
-      <ul className="flex gap-4 md:gap-8 text-lg sm:text-2xl opacity-60 text-white">
-        <li
-          role="button"
-          tabIndex={0}
-          data-active={selected === "All"}
-          onClick={() => handleSelect("All")}
-          onKeyDown={(e) => onKey(e, "All")}
-          className={`md:rounded-3xl rounded-lg bg-violet-dark px-3 py-1 md:px-6 md:py-2 cursor-pointer border-2 border-transparent hover:scale-110 transition-all hover:bg-violet-light hover:border-white active:border-white active:bg-violet-light focus:outline-none focus-visible:ring-2 focus-visible:ring-white`}
-          aria-pressed={selected === "All"}
-          aria-label="Show all categories"
-        >
-          All
-        </li>
+    <div className="w-full min-w-0">
+      {label && (
+        <div className="flex items-center justify-between mb-2 px-1">
+          <span className="text-xs font-bold uppercase text-violet-200">
+            {label}
+          </span>
+        </div>
+      )}
 
-        {data &&
-          data.length > 0 &&
-          data.map((category) => {
-            const isActive = selected === category.name;
-            return (
-              <li
-                key={category.id}
-                role="button"
-                tabIndex={0}
-                data-active={isActive}
-                onClick={() => handleSelect(category.name)}
-                onKeyDown={(e) => onKey(e, category.name)}
-                className={`md:rounded-3xl rounded-lg bg-violet-dark px-3 py-1 md:px-6 md:py-2 cursor-pointer border-2 transition-all hover:scale-110 hover:bg-violet-light hover:border-white active:bg-violet-light active:border-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                  isActive
-                    ? "scale-110 border-white bg-violet-light"
-                    : "border-transparent"
+      <div
+        className="overflow-x-auto scrollbar-thin p-1 rounded-2xl inset-shadow-violet-dark"
+        style={{ WebkitOverflowScrolling: "touch", boxSizing: "border-box" }}
+      >
+        <ul
+          className="flex gap-4 sm:gap-5 items-center flex-nowrap pr-4 min-w-0"
+          role="list"
+          aria-label={label || "Filter menu"}
+        >
+          <li className="flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => select(null)}
+              onKeyDown={(e) => handleKey(e, null)}
+              aria-pressed={selected === null}
+              className={`inline-flex font-semibold items-center justify-center rounded-full px-4 py-1 md:px-6 md:py-2 text-sm sm:text-lg cursor-pointer border-2 transition-colors focus:outline-none
+                ${
+                  selected === ""
+                    ? "bg-[#E9E5F8] text-[#1F2130] border-white shadow-sm transform scale-100"
+                    : "bg-[#2B2F3A] text-[#D6D8E3] border-transparent hover:bg-[#3A3F50] hover:text-white"
+                }
                 }`}
-                aria-pressed={isActive}
-                aria-label={`Filter by ${category.name}`}
-              >
-                {category.name}
-              </li>
-            );
-          })}
-      </ul>
+              style={{ whiteSpace: "nowrap" }}
+            >
+              All
+            </button>
+          </li>
+
+          {Array.isArray(data) &&
+            data.map((category) => {
+              const name = category?.name ?? String(category?.id);
+              const isActive = selected === name;
+              return (
+                <li key={category?.id ?? name} className="flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => select(name)}
+                    onKeyDown={(e) => handleKey(e, name)}
+                    aria-pressed={isActive}
+                    className={`inline-flex items-center font-semibold justify-center rounded-2xl md:rounded-full px-4 py-1 md:px-6 md:py-2 text-lg sm:text-xl cursor-pointer border-2 transition-colors ease-out duration-150 focus:outline-none 
+                      ${
+                        isActive
+                          ? "bg-[#E9E5F8] text-[#1F2130] border-white shadow-sm transform scale-100"
+                          : "bg-[#2B2F3A] text-[#D6D8E3] border-transparent hover:bg-[#3A3F50] hover:text-white"
+                      }
+                      }`}
+                    style={{
+                      maxWidth: 220,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {name}
+                  </button>
+                </li>
+              );
+            })}
+        </ul>
+      </div>
     </div>
   );
 }
 
-export default FilterMenu;
+export default memo(FilterMenu);

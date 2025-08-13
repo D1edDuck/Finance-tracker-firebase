@@ -21,7 +21,7 @@ function Home() {
   } = useFetchTransactions();
 
   return (
-    <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main className="w-full mx-auto sm:px-6 lg:px-8">
       <section className="mt-6">
         <Balance />
       </section>
@@ -42,36 +42,16 @@ function Home() {
         </section>
       )}
 
-      <section className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
-          <div className="flex items-center gap-3">
-            <p className="md:text-2xl text-xl text-white font-semibold">
-              Filter for category
-            </p>
-          </div>
-
-          <div className="flex-1">
-            <FilterMenu data={category} />
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
-          <div className="flex items-center gap-3">
-            <p className="md:text-2xl text-xl text-white font-semibold">
-              Filter for type
-            </p>
-          </div>
-
-          <div className="flex-1">
-            <FilterMenu
-              data={[
-                { name: "expenses", id: 100 },
-                { name: "income", id: 200 },
-              ]}
-            />
-          </div>
-        </div>
-      </section>
+      <div className="flex flex-col min-w-0 md:flex-row md:justify-between gap-2 md:gap-4 mb-4 md:mb-8">
+        <FilterMenu data={category} label="Sort by category" />
+        <FilterMenu
+          data={[
+            { name: "expenses", id: 100 },
+            { name: "income", id: 200 },
+          ]}
+          label="Sort by type"
+        />
+      </div>
 
       <section aria-labelledby="transactions-title" className="mb-12">
         <h2 id="transactions-title" className="sr-only">

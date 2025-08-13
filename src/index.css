@@ -10,7 +10,7 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {

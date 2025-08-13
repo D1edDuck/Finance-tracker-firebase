@@ -14,7 +14,7 @@ function Layout() {
 
   return (
     <div
-      className={`py-3 px-10 bg-linear-180 from-violet-light to-violet-dark min-h-screen relative`}
+      className={`py-3 px-4 sm:px-8 lg:px-10 bg-linear-180 from-violet-light to-violet-dark min-h-screen relative box-border overflow-x-hidden`}
     >
       <Header
         link={`${currentProduct.pathname == "/" ? "/addTransaction" : "/"}`}
