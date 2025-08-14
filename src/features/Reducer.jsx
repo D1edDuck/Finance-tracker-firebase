@@ -80,6 +80,7 @@ export function reducer(state, action) {
         note: "",
         type: "",
         balance: "",
+        icon: "",
       };
     case "selectSort":
       return {
