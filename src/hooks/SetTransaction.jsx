@@ -45,7 +45,7 @@ function SetTransaction() {
         if (walletSnap.exists()) {
           const data = walletSnap.data();
           newIncome = Number(data.income ?? 0);
-          newExpense = Number(data.expense ?? 0);
+          newExpense = Number(data.expenses ?? 0);
           newBalance = Number(data.balance ?? 0);
         } else {
           newIncome = 0;
