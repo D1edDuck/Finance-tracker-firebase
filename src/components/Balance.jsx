@@ -3,16 +3,9 @@ import { GlobalContext } from "../features/Reducer";
 import useFetchWallet from "../hooks/useFetchWallet";
 
 function Balance() {
-  const {
-    dispatch,
-    state: { wallet = { income: 0, expenses: 0 } },
-  } = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
 
-  const fetched = useFetchWallet();
-  const loading = fetched?.loading ?? false;
-  const error = fetched?.error ?? null;
-  const balance =
-    fetched?.balance ?? (typeof fetched === "number" ? fetched : null);
+  const wallet = useFetchWallet();
 
   return (
     <section
@@ -39,7 +32,7 @@ function Balance() {
             className="bg-white text-violet-800 rounded-lg px-3 py-2 font-semibold text-sm hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-300 transition"
             aria-label="Add initial amount"
           >
-            Add amount
+            Edit amount
           </button>
         </div>
       </div>
@@ -49,18 +42,10 @@ function Balance() {
           <span className="text-xl text-white/70">Balance</span>
 
           <div className="mt-2">
-            {loading ? (
-              <div className="h-10 w-32 bg-white/20 rounded animate-pulse" />
-            ) : error ? (
-              <span
-                className="text-2xl text-red-300"
-                role="status"
-                aria-live="polite"
-              >
-                Error
+            {wallet?.balance != null ? (
+              <span className="text-2xl sm:text-3xl font-bold">
+                {wallet?.balance}$
               </span>
-            ) : balance != null ? (
-              <span className="text-2xl sm:text-3xl font-bold">{balance}$</span>
             ) : (
               <span className="text-2xl sm:text-3xl text-white/60">
                 No data
@@ -88,7 +73,7 @@ function Balance() {
         </div>
       </div>
 
-      {!loading && balance == null && !error && (
+      {wallet?.balance == null && (
         <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white/5 p-3 rounded-lg">
           <p className="text-sm text-white/80">
             The initial balance is not set — add an amount to start tracking
