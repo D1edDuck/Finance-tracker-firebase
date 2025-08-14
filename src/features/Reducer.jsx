@@ -30,11 +30,21 @@ export const initialData = {
   openAmount: "",
   editTransaction: {},
   refresh: false,
-  wallet: {
-    balance: 100,
-    income: 100,
-    expenses: 100,
-  },
+  icons: [
+    "shopping",
+    "game",
+    "food",
+    "contacts",
+    "clothes",
+    "salary",
+    "quill",
+    "books",
+    "library",
+    "pharmacy",
+    "air",
+    "transport",
+    "scissors",
+  ],
 };
 
 export function reducer(state, action) {

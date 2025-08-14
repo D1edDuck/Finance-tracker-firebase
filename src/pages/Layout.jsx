@@ -7,7 +7,6 @@ function Layout() {
   const {
     state: { openModal, openAmount },
   } = useContext(GlobalContext);
-
   const currentProduct = useLocation();
 
   return (

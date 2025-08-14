@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function SetTransaction() {
   const {
-    state: { user, name, sum, date, type, note },
+    state: { user, name, sum, date, type, note, icon },
     db,
     dispatch,
   } = useContext(GlobalContext);
@@ -71,7 +71,7 @@ function SetTransaction() {
           date,
           note,
           type,
-          img: name,
+          img: icon,
           createdAt: serverTimestamp(),
         });
 
